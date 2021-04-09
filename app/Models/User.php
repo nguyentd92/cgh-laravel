@@ -40,4 +40,24 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    function hasAtLeastPermissions(array $permissions) {
+        foreach($permissions as $permission) {
+            if(strpos($this->permissions, $permission) !== false && strpos($this->permissions, $permission) >= 0) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    function hasAllPermissions(array $permissions) {
+        foreach($permissions as $permission) {
+            if(strpos($this->permissions, $permission) !== false && strpos($this->permissions, $permission)>= 0) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 }

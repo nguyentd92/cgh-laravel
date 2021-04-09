@@ -30,13 +30,20 @@
                 </li>
             </ul>
         </div>
+
+        <a href="#">{{ auth()->user()->email }}</a>,
+
+        <form method="POST" action="/sign-out">
+            @csrf
+            <button type="submit" class="btn btn-secondary btn-sm">Sign Out</button>
+        </form>
     </nav>
 
     <main class="pt-2">
 
-    @yield('main-content')
+        @yield('main-content')
 
-    @yield('footer')
+        @yield('footer')
 
     </main>
 </body>
