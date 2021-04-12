@@ -1,6 +1,7 @@
 @extends('layouts.admin-layout')
 
 @section('main-content')
+    @csrf
     <div class="d-flex align-items-start">
         <div class="col-6">
             <a class="btn btn-primary" href="/products/create">Create Product</a>
@@ -15,25 +16,46 @@
         </form>
     </div>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Name</th>
-                <th scope="col">Description</th>
-                <th scope="col">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($entities as $index => $entity)
-            <tr>
-                <th scope='row'>{{ $index + 1 }}</th>
-                <td>{{ $entity->name }}</td>
-                <td>{{ $entity->description }}</td>
-                <td><a class='btn btn-warning' href='/products/{{ $entity->id }}/edit'>Sửa</a></td>
-                <td><a class='btn btn-warning' href='/products/{{ $entity->id }}/delete'>Xóa</a></td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
+    <div id="product_list"></div>
+
+    <script>
+        window.onload = loadList
+
+        function loadList() {
+            event.preventDefault();
+            var url = `/products/list`;
+
+            const xhr = new XMLHttpRequest();
+
+            xhr.open('GET', url, false);
+
+            xhr.onload = function(xml) {
+                console.log(xml)
+                const productListElement = document.querySelector('#product_list');
+
+                productListElement.innerHTML = xml.target.response;
+            }
+
+            xhr.send(null);
+        }
+
+        function deleteProduct(id) {
+            event.preventDefault();
+            var url = `/products/${id}/delete`;
+            var csrfToken = document.querySelector('[name="_token"]').value;
+
+            const xhr = new XMLHttpRequest();
+
+            xhr.open('DELETE', url, false);
+            xhr.setRequestHeader('x-csrf-token', csrfToken);
+            xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+            xhr.setRequestHeader("Accept", "application/json");
+
+            xhr.onload = function() {
+                loadList()
+            }
+
+            xhr.send(null);
+        }
+    </script>
 @endsection

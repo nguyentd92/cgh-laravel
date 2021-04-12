@@ -10,7 +10,6 @@ class ProductsController extends Controller
 {
     public function getList(Request $request)
     {
-
         $entities = Product::where('name', 'LIKE' ,'%'.$request->keyword.'%')
             ->orWhere('description', 'LIKE' ,'%'.$request->keyword.'%')
             ->orWhere('unit_price', 'LIKE' ,'%'.$request->keyword.'%')
@@ -18,6 +17,16 @@ class ProductsController extends Controller
             ->get();
 
         return view('products.list', compact('entities'));
+    }
+
+    public function getProductList(Request $request) {
+        $entities = Product::where('name', 'LIKE' ,'%'.$request->keyword.'%')
+            ->orWhere('description', 'LIKE' ,'%'.$request->keyword.'%')
+            ->orWhere('unit_price', 'LIKE' ,'%'.$request->keyword.'%')
+            ->orWhere('in_stocks', 'LIKE' ,'%'.$request->keyword.'%')
+            ->get();
+
+        return view('products.list-product', compact('entities'));
     }
 
     public function create()

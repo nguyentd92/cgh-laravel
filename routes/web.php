@@ -89,6 +89,8 @@ Route::group(['middleware' => 'auth'],function() {
         // Trang danh sách customer
         Route::get('/', [ProductsController::class, 'getList'])->middleware('permission:'.join(',', [ProductPermissions::$ViewList]));
 
+        Route::get('/list', [ProductsController::class, 'getProductList'])->middleware('permission:'.join(',', [ProductPermissions::$ViewList]));
+
         // Trang danh sách tim kiem customer
         Route::post('/', [ProductsController::class, 'getList'])->middleware('permission:'.join(',', [ProductPermissions::$ViewList]));
 
