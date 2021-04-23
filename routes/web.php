@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 Route::get('/sign-in', [AuthController::class, 'showSignInPage'])->name('sign-in');
 
 Route::post('/sign-in', [AuthController::class, 'signIn']);
@@ -27,9 +28,9 @@ Route::get('/register', [AuthController::class, 'showRegisterPage']);
 
 Route::post('/register', [AuthController::class, 'register']);
 
-Route::group(['middleware' => 'auth'],function() {
+Route::group(['middleware' => 'auth'], function () {
 
-    Route::group(['prefix' => 'customers'],function () {
+    Route::group(['prefix' => 'customers'], function () {
 
         // Trang danh sách customer
         Route::get('/', [CustomersController::class, 'getList']);
@@ -57,7 +58,7 @@ Route::group(['middleware' => 'auth'],function() {
     });
 
 
-    Route::group(['prefix' => 'categories'],function () {
+    Route::group(['prefix' => 'categories'], function () {
 
         // Trang danh sách customer
         Route::get('/', [CategoriesController::class, 'getList']);
@@ -84,32 +85,34 @@ Route::group(['middleware' => 'auth'],function() {
         Route::delete('/{id}/delete', [CategoriesController::class, 'destroy']);
     });
 
-    Route::group(['prefix' => 'products'],function () {
+    Route::group(['prefix' => 'products'], function () {
 
         // Trang danh sách customer
-        Route::get('/', [ProductsController::class, 'getList'])->middleware('permission:'.join(',', [ProductPermissions::$ViewList]));
+        Route::get('/', [ProductsController::class, 'getList'])->middleware('permission:' . join(',', [ProductPermissions::$ViewList]));
 
-        Route::get('/list', [ProductsController::class, 'getProductList'])->middleware('permission:'.join(',', [ProductPermissions::$ViewList]));
+        Route::get('/list', [ProductsController::class, 'getProductList'])->middleware('permission:' . join(',', [ProductPermissions::$ViewList]));
 
         // Trang danh sách tim kiem customer
-        Route::post('/', [ProductsController::class, 'getList'])->middleware('permission:'.join(',', [ProductPermissions::$ViewList]));
+        Route::post('/', [ProductsController::class, 'getList'])->middleware('permission:' . join(',', [ProductPermissions::$ViewList]));
 
         // Trang Thêm mới customer
-        Route::get('/create', [ProductsController::class, 'create'])->middleware('permission:'.join(',', [ProductPermissions::$Create]));
+        Route::get('/create', [ProductsController::class, 'create'])->middleware('permission:' . join(',', [ProductPermissions::$Create]));
 
-        Route::post('/create', [ProductsController::class, 'store'])->middleware('permission:'.join(',', [ProductPermissions::$Create]));
+        Route::post('/create', [ProductsController::class, 'store'])->middleware('permission:' . join(',', [ProductPermissions::$Create]));
 
         // Trang Chi tiết
-        Route::get('/{id}', [ProductsController::class, 'getById'])->middleware('permission:'.join(',', [ProductPermissions::$ViewDetails]));
+        Route::get('/{id}', [ProductsController::class, 'getById'])->middleware('permission:' . join(',', [ProductPermissions::$ViewDetails]));
 
         // Trang cập nhật
-        Route::get('/{id}/edit', [ProductsController::class, 'edit'])->middleware('permission:'.join(',', [ProductPermissions::$Update]));
+        Route::get('/{id}/edit', [ProductsController::class, 'edit'])->middleware('permission:' . join(',', [ProductPermissions::$Update]));
+        // Trang cập nhật
+        Route::get('/{id}/edit-form', [ProductsController::class, 'editForm'])->middleware('permission:' . join(',', [ProductPermissions::$Update]));
 
-        Route::put('/{id}/edit', [ProductsController::class, 'update'])->middleware('permission:'.join(',', [ProductPermissions::$Update]));
+        Route::put('/{id}/edit', [ProductsController::class, 'update'])->middleware('permission:' . join(',', [ProductPermissions::$Update]));
 
         // Trang xác nhận xóa
-        Route::get('/{id}/delete', [ProductsController::class, 'delete'])->middleware('permission:'.join(',', [ProductPermissions::$Delete]));
+        Route::get('/{id}/delete', [ProductsController::class, 'delete'])->middleware('permission:' . join(',', [ProductPermissions::$Delete]));
 
-        Route::delete('/{id}/delete', [ProductsController::class, 'destroy'])->middleware('permission:'.join(',', [ProductPermissions::$Delete]));
+        Route::delete('/{id}/delete', [ProductsController::class, 'destroy'])->middleware('permission:' . join(',', [ProductPermissions::$Delete]));
     });
 });

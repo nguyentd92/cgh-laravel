@@ -13,7 +13,7 @@
             <th scope='row'>{{ $index + 1 }}</th>
             <td>{{ $entity->name }}</td>
             <td>{{ $entity->description }}</td>
-            <td><a class='btn btn-warning' href='/products/{{ $entity->id }}/edit'>Sửa</a></td>
+            <td><a class='btn btn-warning' onclick="openEditForm({{ $entity->id }})">Sửa</a></td>
             @can(App\Permissions\ProductPermissions::$Delete)
             <td>
                 <a class='btn btn-warning' onclick="deleteProduct({{ $entity->id }})">Xóa</a>

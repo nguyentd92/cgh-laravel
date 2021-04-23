@@ -63,6 +63,14 @@ class ProductsController extends Controller
         return view('products.edit', compact('entity', 'categories'));
     }
 
+    public function editForm($id)
+    {
+        $entity = Product::findOrFail($id);
+        $categories = Category::all();
+
+        return view('products.edit-form', compact('entity', 'categories'));
+    }
+
     public function update($id, Request $request)
     {
         // Tìm customer từ DB
@@ -77,7 +85,7 @@ class ProductsController extends Controller
         // Lưu
         $entity->save();
 
-        return redirect("/products/$id/edit");
+        return;
     }
 
     public function delete()
